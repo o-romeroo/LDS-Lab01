@@ -12,7 +12,7 @@ O sistema de matrículas é uma ferramenta abrangente que não apenas facilita o
 | **História de Usuário** | **Como**        | **Quero**                               | **Para**                                       |
 |-------------------------|-----------------|-----------------------------------------|------------------------------------------------|
 | UC1                     | Usuário         | Efetuar login                           | Acessar o sistema com segurança                |
-| UC2                     | Usuário         | Recuperar minha senha                   | Reganhar acesso à minha conta se esquecer minha senha |
+| UC2                     | Usuário         | Recuperar minha senha                   | Obter acesso à minha conta se esquecer minha senha |
 | UC3                     | Secretário      | Cadastrar aluno                         | Adicionar novos alunos ao sistema              |
 | UC4                     | Secretário      | Remover aluno                           | Excluir registros de alunos que não estão mais na instituição |
 | UC5                     | Secretário      | Gerar currículo                         | Preparar e disponibilizar o plano acadêmico para o semestre |
