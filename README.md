@@ -2,7 +2,7 @@
 
 ### Sistema de matrículas
 
-O processo começa com o setor de pedidos ou o setor de estoque da empresa comunicando que ou um pedido ou uma compra está em andamento, após isso esperam a aprovação ou não da ação. Caso a ação seja aprovada, o processo é finalizado. Caso o contrário, é informado ao devido setor que a ação não foi concluída com êxito, e o processo finalizado.
+O sistema de matrículas é uma ferramenta abrangente que não apenas facilita o processo de matrícula e administração para a universidade, mas também melhora a experiência de alunos e professores. Ele é projetado para ser seguro, confiável e fácil de usar, garantindo que todas as operações acadêmicas possam ser gerenciadas de forma eficiente e eficaz.
 
 ![Exemplo de um Modelo BPMN do Processo de saldo comercial](images/Processo_de_Tesouraria.png "Modelo BPMN do Processo de Tesouraria.")
 
