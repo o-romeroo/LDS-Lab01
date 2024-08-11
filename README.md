@@ -9,42 +9,18 @@ O sistema de matrículas é uma ferramenta abrangente que não apenas facilita o
 
 #### Detalhamento das atividades
 
-**Passar as informações da empresa para que o cliente realize o pagamento no prazo estipulado**
-
-| **Campo**       | **Tipo**         | **Restrições** | **Valor default** |
-| ---             | ---              | ---            | ---               |
-| [Nome do campo] | [tipo de dados]  |                |                   |
-| Enviar informações pagamento | E-mail |         |                   |
-
-| **Comandos**         |  **Destino**                   | **Tipo**          |
-| ---                  | ---                            | ---               |
-| [Nome do botão/link] | Atividade/processo de destino  | (default/cancel/  ) |
-| Enviar informações pagamento |         |  default       |                 |   
-
-**Autorizar compra e Informar ao setor de estoque que a compra foi realizada**
-
-| **Campo**       | **Tipo**         | **Restrições** | **Valor default** |
-| ---             | ---              | ---            | ---               |
-| [Nome do campo] | [tipo de dados]  |                |                   |
-| Aprovar compra  |                  |      |             |
-
-
-| **Comandos**         |  **Destino**                   | **Tipo** |
-| ---                  | ---                            | ---               |
-| [Nome do botão/link] | Atividade/processo de destino  | (default/cancel/  ) |
-| Aprovar compra   |  Fim do processo |  default       |
-
-
-
-**Cancelar compra e Informar ao setor de estoque que a compra não pôde ser realizada**
-
-| **Campo**       | **Tipo**         | **Restrições** | **Valor default** |
-| ---             | ---              | ---            | ---               |
-| [Nome do campo] | [tipo de dados]  |                |                   |
-| Cancelar compra |  |      |             |
-
-
-| **Comandos**         |  **Destino**                   | **Tipo** |
-| ---                  | ---                            | ---               |
-| [Nome do botão/link] | Atividade/processo de destino  | (default/cancel/  ) |
-| Cancelar compra      |  Fim do processo               |  default       |
+| **História de Usuário** | **Como**        | **Quero**                               | **Para**                                       |
+|-------------------------|-----------------|-----------------------------------------|------------------------------------------------|
+| UC1                     | Usuário         | Efetuar login                           | Acessar o sistema com segurança                |
+| UC2                     | Usuário         | Recuperar minha senha                   | Reganhar acesso à minha conta se esquecer minha senha |
+| UC3                     | Secretário      | Cadastrar aluno                         | Adicionar novos alunos ao sistema              |
+| UC4                     | Secretário      | Remover aluno                           | Excluir registros de alunos que não estão mais na instituição |
+| UC5                     | Secretário      | Gerar currículo                         | Preparar e disponibilizar o plano acadêmico para o semestre |
+| UC6                     | Secretário      | Atualizar dados do aluno                | Manter informações atualizadas dos alunos      |
+| UC7                     | Secretário      | Consultar dados do aluno                | Acessar informações detalhadas sobre os alunos |
+| UC8                     | Aluno           | Matricular em disciplina obrigatória    | Cumprir os requisitos do meu curso             |
+| UC9                     | Aluno           | Matricular em disciplina optativa       | Complementar minha formação acadêmica          |
+| UC10                    | Aluno           | Cancelar matrícula                       | Ajustar meu plano de estudos                   |
+| UC11                    | Aluno           | Inscrever para o semestre                |Receber cobrança relativa as disciplinas daquele semestre|
+| UC12                    | Professor       | Visualizar histórico do aluno            | Entender o progresso acadêmico do aluno        |
+| UC13                    | Professor       | Visualizar os alunos matriculados em cada disciplina | Planejar aulas e avaliações                  |
