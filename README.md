@@ -5,8 +5,10 @@
 O sistema de matrículas é uma ferramenta abrangente que não apenas facilita o processo de matrícula e administração para a universidade, mas também melhora a experiência de alunos e professores. Ele é projetado para ser seguro, confiável e fácil de usar, garantindo que todas as operações acadêmicas possam ser gerenciadas de forma eficiente e eficaz.
 
 
+
 ### Diagrama de Caso de Uso
 ![User Case](./imagens/UserCaseDiagramMatricula.png)
+
 
 
 ### Histórias de Usuário
