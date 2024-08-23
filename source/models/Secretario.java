@@ -11,17 +11,22 @@ public class Secretario extends Usuario {
         return true;
     }
 
-    public boolean removerAluno(Aluno aluno) {
+    public boolean removerAluno(Long idAluno) {
         // has to implement
         return true;
     }
 
-    public boolean consultarAluno(String loginAluno) {
+    public Aluno consultarAluno(String loginAluno) {
         // has to implement
-        return true;
+        return null;
     }
 
     public boolean atualizarDadosAluno(String loginAluno,Aluno aluno) {
+        // has to implement
+        return true;
+    }
+
+    public boolean atualizarDadosAlunoById(Long idAluno,Aluno aluno) {
         // has to implement
         return true;
     }
