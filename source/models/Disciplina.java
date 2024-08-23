@@ -64,4 +64,15 @@ public class Disciplina {
     public void setPreco(double preco) {
         this.preco = preco;
     }
+
+    public boolean verificaStatusDisciplina() {
+        // need to discuss
+        return true;
+    }
+
+
+    public boolean verificaDisponibilidadeDisciplina() {
+        // need to discuss
+        return true;
+    }
 }
