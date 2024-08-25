@@ -12,7 +12,7 @@ O sistema de matrículas é uma ferramenta abrangente que não apenas facilita o
 
 
 ### Diagrama de Classes
-![Class Diagram](./imagens/diagrama_classe_lab01.PNG)
+![Class Diagram](./imagens/diagrama_classe_lab01.png)
 
 
 
