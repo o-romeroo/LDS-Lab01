@@ -1,3 +1,5 @@
+package com.pucmg.lab01.models;
+
 
 public class Aluno extends Usuario {
 

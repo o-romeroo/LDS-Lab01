@@ -1,3 +1,6 @@
+package com.pucmg.lab01.models;
+
+
 import java.util.List;
 
 public class Secretario extends Usuario {
@@ -32,7 +35,7 @@ public class Secretario extends Usuario {
     }
 
 
-    public List<Disciplina> gerarCurriculo(Curso curso){
+    public List<Disciplina> gerarCurriculo(String nomeCurso){
         // has to implement
         return null;
     }
