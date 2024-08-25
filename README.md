@@ -16,6 +16,12 @@ O sistema de matrículas é uma ferramenta abrangente que não apenas facilita o
 
 
 
+### Diagrama de Pacotes
+![Package Diagram](./imagens/diagrama_pacotes_lab01.png)
+
+
+
+
 ### Histórias de Usuário
 | **História de Usuário** | **Como**        | **Quero**                               | **Para**                                       |
 |-------------------------|-----------------|-----------------------------------------|------------------------------------------------|
