@@ -10,8 +10,8 @@ public class Secretario extends Usuario {
     AlunoRepository alunoRepository;
     SecretarioService secretarioService;
 
-    public Secretario(String nome, String login, String password, Disciplina[] disciplinas) {
-        super(nome, login, password);
+    public Secretario(String nome, String login, String password, Long id, Disciplina[] disciplinas) {
+        super(nome, login, password, id);
     }
 
     public void cadastrarAluno(Aluno aluno) {

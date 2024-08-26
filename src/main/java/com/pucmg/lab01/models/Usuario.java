@@ -6,12 +6,24 @@ public class Usuario {
     private String nome;
     private String login;
     private String password;
+    private Long id;
 
-    public Usuario(String nome, String login, String password) {
+
+    public Usuario(String nome, String login, String password, Long id) {
         this.nome = nome;
         this.login = login;
         this.password = password;
+        this.id = id;
     }
+    
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 
     public String getNome() {
         return nome;

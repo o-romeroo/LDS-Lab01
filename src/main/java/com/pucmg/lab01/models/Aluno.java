@@ -1,34 +1,35 @@
 package com.pucmg.lab01.models;
+import java.util.List;
 
 
 public class Aluno extends Usuario {
 
-    Disciplina[] disciplinas;
-    Disciplina[] disciplinasCursadas;
+    List<Disciplina> disciplinas;
+    List<Disciplina> disciplinasCursadas;
 
-    public Aluno(String nome, String login, String password, Disciplina[] disciplinas, Disciplina[] disciplinasCursadas) {
-        super(nome, login, password);
+    public Aluno(String nome, String login, String password, Long id, List<Disciplina> disciplinas, List<Disciplina> disciplinasCursadas) {
+        super(nome, login, password, id);
         this.disciplinas = disciplinas;
         this.disciplinasCursadas = disciplinasCursadas;
     }
 
-    public Disciplina[] getDisciplinas() {
+    public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }
 
-    public void setDisciplinas(Disciplina[] disciplinas) {
+    public void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
 
-    public Disciplina[] getDisciplinasCursadas() {
+    public List<Disciplina> getDisciplinasCursadas() {
         return disciplinasCursadas;
     }
 
-    public void setDisciplinasCursadas(Disciplina[] disciplinasCursadas) {
+    public void setDisciplinasCursadas(List<Disciplina> disciplinasCursadas) {
         this.disciplinasCursadas = disciplinasCursadas;
     }
 
-    public boolean efetuarMatricula(Disciplina[] disciplinas) {
+    public boolean efetuarMatricula(List<Disciplina> disciplinas) {
         // has to implement
         return true;
     }

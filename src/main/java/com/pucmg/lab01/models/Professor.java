@@ -5,8 +5,8 @@ public class Professor extends Usuario {
 
     Disciplina[] disciplinas;
 
-    public Professor(String nome, String login, String password, Disciplina[] disciplinas) {
-        super(nome, login, password);
+    public Professor(String nome, String login, String password, Long id, Disciplina[] disciplinas) {
+        super(nome, login, password, id);
         this.disciplinas = disciplinas;
     }
 

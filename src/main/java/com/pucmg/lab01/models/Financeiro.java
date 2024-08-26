@@ -1,11 +1,12 @@
 package com.pucmg.lab01.models;
 
+import java.util.List;
 
 public class Financeiro {
 
-    private Aluno[] alunos;
+    private List<Aluno> alunos;
 
-    public Financeiro(Aluno[] alunos) {
+    public Financeiro(List<Aluno> alunos) {
         this.alunos = alunos;
     }
 
