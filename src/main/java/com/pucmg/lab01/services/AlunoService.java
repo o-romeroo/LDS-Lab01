@@ -45,6 +45,31 @@ public class AlunoService {
                 (disciplina.getObrigatoria() ? "obrigatórias." : "optativas."));
         }
     }
+
+    public void cancelarMatriculaDisciplina(String nomeDisciplina, Long idAluno) {
+        // Busca a disciplina pelo nome e verifica se ela existe
+        Disciplina disciplina = disciplinaService.consultarDisciplina(nomeDisciplina);
+    
+        // Busca o aluno pelo id e verifica se ele existe
+        Aluno aluno = consultarAluno(idAluno);
+    
+        // Verifica se a disciplina e o aluno estão associados
+        if (!disciplina.getAlunos().contains(aluno) || !aluno.getDisciplinas().contains(disciplina)) {
+            throw new IllegalStateException("Aluno não está matriculado na disciplina especificada.");
+        }
+    
+        // Remove o aluno da lista de alunos da disciplina
+        disciplina.getAlunos().remove(aluno);
+    
+        // Remove a disciplina da lista de disciplinas do aluno
+        aluno.getDisciplinas().remove(disciplina);
+    
+        // Salva as mudanças no banco de dados
+        disciplinaService.salvarDisciplina(disciplina);
+        salvarAluno(aluno);
+    }
+    
+    
     
     public Aluno consultarAluno(Long idAluno) {
         return alunoRepository.findById(idAluno)
