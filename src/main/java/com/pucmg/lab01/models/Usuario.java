@@ -7,13 +7,15 @@ public class Usuario {
     private String login;
     private String password;
     private Long id;
+    private String CPF;
 
 
-    public Usuario(String nome, String login, String password, Long id) {
+    public Usuario(String nome, String login, String password, String CPF) {
         this.nome = nome;
         this.login = login;
         this.password = password;
-        this.id = id;
+        this.id = generateId();
+        this.CPF = CPF;
     }
     
     public Long getId() {
@@ -47,6 +49,18 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    private Long generateId() {
+        return (long) (Math.random() * 1000);
+    }
+
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String cPF) {
+        CPF = cPF;
     }
 
     public boolean realizarLogin(String login, String password) {

@@ -7,8 +7,8 @@ public class Aluno extends Usuario {
     List<Disciplina> disciplinas;
     List<Disciplina> disciplinasCursadas;
 
-    public Aluno(String nome, String login, String password, Long id, List<Disciplina> disciplinas, List<Disciplina> disciplinasCursadas) {
-        super(nome, login, password, id);
+    public Aluno(String nome, String login, String password, String CPF, List<Disciplina> disciplinas, List<Disciplina> disciplinasCursadas) {
+        super(nome, login, password, CPF);
         this.disciplinas = disciplinas;
         this.disciplinasCursadas = disciplinasCursadas;
     }
