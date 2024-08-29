@@ -3,16 +3,24 @@ package com.pucmg.lab01.models;
 
 import java.util.List;
 
-import com.pucmg.lab01.repositories.AlunoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.pucmg.lab01.services.SecretarioService;
 
-public class Secretario extends Usuario {
-    AlunoRepository alunoRepository;
-    SecretarioService secretarioService;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
-    public Secretario(String nome, String login, String password, String CPF, Disciplina[] disciplinas) {
+@Entity
+@Table(name = "secretario")
+public class Secretario extends Usuario {
+    
+
+    public Secretario(String nome, String login, String password, String CPF, List<Disciplina> disciplinas) {
         super(nome, login, password, CPF);
     }
+
+    public Secretario() {
+    }   
 
     public List<Disciplina> gerarCurriculo(String nomeCurso){
         // has to implement

@@ -6,6 +6,8 @@ import com.pucmg.lab01.models.Aluno;
 import com.pucmg.lab01.models.Disciplina;
 import com.pucmg.lab01.repositories.AlunoRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class AlunoService {
 
@@ -15,6 +17,7 @@ public class AlunoService {
     @Autowired
     AlunoRepository alunoRepository;
 
+    @Transactional
     public void matricularDisciplina(String nomeDisciplina, Long idAluno) {
         // Busca a disciplina pelo nome e verifica se ela existe
         Disciplina disciplina = disciplinaService.consultarDisciplina(nomeDisciplina);
@@ -46,6 +49,7 @@ public class AlunoService {
         }
     }
 
+    @Transactional
     public void cancelarMatriculaDisciplina(String nomeDisciplina, Long idAluno) {
         // Busca a disciplina pelo nome e verifica se ela existe
         Disciplina disciplina = disciplinaService.consultarDisciplina(nomeDisciplina);
@@ -70,12 +74,13 @@ public class AlunoService {
     }
     
     
-    
+    @Transactional
     public Aluno consultarAluno(Long idAluno) {
         return alunoRepository.findById(idAluno)
             .orElseThrow(() -> new IllegalArgumentException("Aluno com ID " + idAluno + " não encontrado."));
     }
     
+    @Transactional
     public void salvarAluno(Aluno aluno){
         alunoRepository.save(aluno);
     }
