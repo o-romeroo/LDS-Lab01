@@ -1,9 +1,12 @@
 package com.pucmg.lab01.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pucmg.lab01.models.Aluno;
+import com.pucmg.lab01.models.Disciplina;
 import com.pucmg.lab01.repositories.AlunoRepository;
 
 import jakarta.transaction.Transactional;
@@ -47,6 +50,11 @@ public class SecretarioService {
         }
         System.out.println("Aluno não encontrado");
         return false;
+    }
+
+    public List<Disciplina> gerarCurriculo(String nomeCurso){
+        // has to implement
+        return null;
     }
 
 }

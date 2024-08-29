@@ -22,9 +22,6 @@ public class Secretario extends Usuario {
     public Secretario() {
     }   
 
-    public List<Disciplina> gerarCurriculo(String nomeCurso){
-        // has to implement
-        return null;
-    }
+    
 }
 

@@ -25,12 +25,11 @@ public class Usuario {
     
     @Column(nullable = false)
     @Size(min = 3, max = 20)
-    @Pattern(regexp = "^[^\\s]*$") // não pode ter espaços  
     private String login;
     
     @Column(nullable = false)
     @Size(min = 3, max = 20)
-    @Pattern(regexp = "^[^\\s]*$")
+
     private String password;
    
     @Id
@@ -38,7 +37,6 @@ public class Usuario {
     private Long id;
     
     @Column(nullable = false)
-    @Pattern(regexp = "^[^\\s]*$")
     private String CPF; // decidir se cpf terá ou não máscara
 
     public Usuario() {
