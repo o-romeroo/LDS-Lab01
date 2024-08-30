@@ -5,6 +5,7 @@ import com.pucmg.lab01.models.Professor;
 import com.pucmg.lab01.models.Secretario;
 import com.pucmg.lab01.models.Usuario;
 import com.pucmg.lab01.repositories.AlunoRepository;
+import com.pucmg.lab01.repositories.ProfessorRepository;
 import com.pucmg.lab01.repositories.UsuarioRepository; // Add this import statement
 
 import java.util.*;
@@ -20,6 +21,9 @@ public class UsuarioService {
     
     @Autowired
     private AlunoRepository alunoRepository;
+
+    @Autowired
+    private ProfessorRepository professorRepository;
 
     public String determinarTipoUsuario(Usuario usuario) {
         if (usuario instanceof Secretario) {
@@ -64,6 +68,24 @@ public class UsuarioService {
 
         // Salvar no banco de dados
         return alunoRepository.save(novoAluno);
+    }
+
+    // Função para cadastrar um novo aluno
+    public Professor cadastrarProfessor(String nomeCompleto, String cpf) {
+        // Gerar login e senha aleatórios
+        String login = gerarLoginAleatorio(nomeCompleto);
+        String senha = gerarSenhaAleatoria(nomeCompleto);// Gera um número aleatório de 100000 a 999999
+
+        // Criar a instância de Professor
+        Professor novoProfessor = new Professor(nomeCompleto, login, senha, cpf, List.of());
+
+        // Verificar se o Professor já existe pelo CPF
+        if (professorRepository.findByCPF(cpf).isPresent()) {
+            throw new IllegalArgumentException("Aluno com CPF " + cpf + " já está cadastrado.");
+        }
+
+        // Salvar no banco de dados
+        return professorRepository.save(novoProfessor);
     }
 
     private String gerarLoginAleatorio(String nomeCompleto) {

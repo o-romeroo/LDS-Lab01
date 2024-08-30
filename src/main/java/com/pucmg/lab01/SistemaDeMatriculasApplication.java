@@ -1,18 +1,20 @@
 package com.pucmg.lab01;
 
 import com.pucmg.lab01.models.Aluno;
+import com.pucmg.lab01.models.Disciplina;
 import com.pucmg.lab01.models.Professor;
 import com.pucmg.lab01.models.Secretario;
 import com.pucmg.lab01.models.Usuario;
 import com.pucmg.lab01.services.AlunoService;
+import com.pucmg.lab01.services.ProfessorService;
 import com.pucmg.lab01.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class SistemaDeMatriculasApplication implements CommandLineRunner {
@@ -22,6 +24,9 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
 
     @Autowired
     private AlunoService alunoService;
+
+    @Autowired
+    private ProfessorService professorService;
 
     public static void main(String[] args) {
         SpringApplication.run(SistemaDeMatriculasApplication.class, args);
@@ -67,7 +72,8 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                                 gerenciarAluno(scanner);
                                 break;
                             case 2:
-                                // Lógica para gerenciar professor
+                                clearScreen();
+                                gerenciarProfessor(scanner);
                                 break;
                             case 3:
                                 // Lógica para gerenciar disciplina
@@ -189,6 +195,110 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
             }
         }
     }    
+
+    private void gerenciarProfessor(Scanner scanner) {
+        boolean continuarGerenciamentoProfessor = true;
+    
+        while (continuarGerenciamentoProfessor) {
+            System.out.println("Selecione a opção desejada:\n1 - Cadastrar professor\n2 - Consultar professor\n3 - Atualizar professor\n4 - Remover professor\n5 - Voltar ao menu principal");
+            int opcaoProfessor = scanner.nextInt();
+            scanner.nextLine();
+    
+            switch (opcaoProfessor) {
+                case 1:
+                    clearScreen();
+                    System.out.print("Digite o nome completo do professor: ");
+                    String nomeCompleto = scanner.nextLine();
+    
+                    System.out.print("Digite o CPF do professor: ");
+                    String cpf = scanner.nextLine();
+    
+                    usuarioService.cadastrarProfessor(nomeCompleto, cpf);
+                    clearScreen();
+                    System.out.println("Professor cadastrado com sucesso!\n");
+                    break;
+                case 2:
+                    clearScreen();
+                    System.out.print("Digite o CPF do professor: ");
+                    String cpfPesquisa = scanner.nextLine();
+                    Professor professor = professorService.consultarProfessorCPF(cpfPesquisa);
+                    clearScreen();
+                    if (professor != null) {
+                        String disciplinasLeciona = (professor.getDisciplinas() != null && !professor.getDisciplinas().isEmpty()) ?
+                            professor.getDisciplinas().stream()
+                                    .map(Disciplina::getNome) // Assuming Disciplina has a getNome() method
+                                    .collect(Collectors.joining(", ")) :
+                            "Não está vinculado em nenhuma disciplina no momento!";
+                        
+                        System.out.println("Dados do professor:\n" + 
+                                           "Nome completo: " + professor.getNome() + 
+                                           "\nCPF: " + professor.getCPF() + 
+                                           "\nDisciplinas que leciona: " + disciplinasLeciona);
+                    } else {
+                        System.out.println("Professor não encontrado.\n");
+                    }
+                    System.out.println("\nPressione Enter para voltar ao menu.");
+                    scanner.nextLine();  // Espera o usuário pressionar Enter
+                    clearScreen();
+                    break;
+                case 3:
+                    clearScreen();
+                    System.out.print("Digite o CPF do professor: ");
+                    String cpfPesquisa2 = scanner.nextLine();
+                    Professor professor2 = professorService.consultarProfessorCPF(cpfPesquisa2);
+                    clearScreen();
+                    if (professor2 != null) {
+                        System.out.println("Dados do professor:\n" + 
+                                           "Nome completo: " + professor2.getNome() + 
+                                           "\nCPF: " + professor2.getCPF());
+                        System.out.print("\n\nDigite o novo nome completo do professor: ");
+                        String novoNomeCompleto = scanner.nextLine();
+                        professor2.setNome(novoNomeCompleto);
+                        professorService.salvarProfessor(professor2);
+                        clearScreen();
+                        System.out.println("Professor atualizado com sucesso!\n");
+                    } else {
+                        clearScreen();
+                        System.out.println("Professor não encontrado.\n");
+                    }
+                    break;
+                case 4:
+                    clearScreen();
+                    System.out.print("Digite o CPF do professor: ");
+                    String cpfPesquisa3 = scanner.nextLine();
+                    Professor professor3 = professorService.consultarProfessorCPF(cpfPesquisa3);
+                    clearScreen();
+                    if (professor3 != null) {
+                        System.out.println("Dados do professor:\n" + 
+                                           "Nome completo: " + professor3.getNome() + 
+                                           "\nCPF: " + professor3.getCPF());
+                        System.out.println("\nTem certeza que deseja remover o professor do sistema?\n1 - Sim\n2 - Não");
+                        int confirmacao = scanner.nextInt();
+                        scanner.nextLine();
+                        if (confirmacao == 1) {
+                            professorService.removerProfessor(professor3);
+                            clearScreen();
+                            System.out.println("Professor removido com sucesso!\n");
+                        } else {
+                            clearScreen();
+                            System.out.println("Operação cancelada.\n");
+                        }
+                    } else {
+                        System.out.println("Professor não encontrado.\n");
+                    }
+                    break;
+                case 5:
+                    continuarGerenciamentoProfessor = false; // Sai do loop de gerenciamento de professores
+                    break;
+                default:
+                    clearScreen();
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+        }
+    }
+    
+
 
     private static void clearScreen() {
         try {

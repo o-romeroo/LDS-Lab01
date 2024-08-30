@@ -10,6 +10,8 @@ import com.pucmg.lab01.models.Disciplina;
 import com.pucmg.lab01.models.Professor;
 import com.pucmg.lab01.repositories.ProfessorRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProfessorService {
     @Autowired
@@ -34,4 +36,27 @@ public class ProfessorService {
 
         return disciplina.getAlunos();
     }
+
+    @Transactional
+    public Professor consultarProfessor(Long idProfessor) {
+        return professorRepository.findById(idProfessor)
+            .orElseThrow(() -> new IllegalArgumentException("Professor com ID " + idProfessor + " não encontrado."));
+    }
+
+    @Transactional
+    public Professor consultarProfessorCPF(String cpf) {
+        return professorRepository.findByCPF(cpf)
+            .orElseThrow(() -> new IllegalArgumentException("Professor com CPF " + cpf + " não encontrado."));
+    }
+    
+    @Transactional
+    public void salvarProfessor(Professor professor){
+        professorRepository.save(professor);
+    }
+
+    @Transactional
+    public void removerProfessor(Professor professor){
+        professorRepository.delete(professor);
+    }
+
 }

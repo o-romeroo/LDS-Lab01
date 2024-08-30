@@ -7,12 +7,15 @@ import java.util.List;
 @Table(name = "professor")
 public class Professor extends Usuario {
 
-    @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL) // Define o relacionamento de um-para-muitos
+    @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Define o relacionamento de um-para-muitos
     private List<Disciplina> disciplinas;
 
     public Professor(String nome, String login, String password, String CPF, List<Disciplina> disciplinas) {
         super(nome, login, password, CPF);
         this.disciplinas = disciplinas;
+    }
+
+    public Professor() {
     }
 
     public List<Disciplina> getDisciplinas() {
@@ -23,10 +26,7 @@ public class Professor extends Usuario {
         this.disciplinas = disciplinas;
     }
 
-    public Aluno[] consultarAlunosMatriculados(Disciplina disciplina) {
-        // Implementar a lógica para consultar alunos matriculados em uma disciplina específica
-        return null;
-    }
+
 
     @Override
     public boolean equals(Object o) {
