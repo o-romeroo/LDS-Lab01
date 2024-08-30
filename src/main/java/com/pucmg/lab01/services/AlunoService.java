@@ -94,6 +94,12 @@ public class AlunoService {
     }
 
     @Transactional
+    public void removerAluno(Aluno aluno){
+        alunoRepository.delete(aluno);
+    }
+
+
+    @Transactional
     public void consultarDisciplinasCursadas(Long idAluno) {
         Aluno aluno = consultarAluno(idAluno);
         System.out.println("Disciplinas cursadas por " + aluno.getNome() + ":");

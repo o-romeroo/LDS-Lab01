@@ -1,6 +1,7 @@
 package com.pucmg.lab01;
 
 import com.pucmg.lab01.models.Aluno;
+import com.pucmg.lab01.models.Professor;
 import com.pucmg.lab01.models.Secretario;
 import com.pucmg.lab01.models.Usuario;
 import com.pucmg.lab01.services.AlunoService;
@@ -55,7 +56,7 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                     case "Secretário":
                         clearScreen();
                         Secretario secretario = (Secretario) usuario;
-                        System.out.println("Olá, " + secretario.getNome() + "! O que deseja realizar?");
+                        System.out.println("Olá, " + secretario.getNome() + "! O que deseja realizar?\n");
                         System.out.println("1 - Gerenciar aluno\n2 - Gerenciar professor\n3 - Gerenciar disciplina\n4 - Sair");
                         int opcao = scanner.nextInt();
                         scanner.nextLine();
@@ -87,13 +88,14 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                         // Lógica para Aluno
                         break;
                     default:
-                        System.out.println("Tipo de usuário desconhecido.");
-                        continuarSistema = false; // Sai do loop principal em caso de tipo desconhecido
+                        System.out.println("Tipo de usuário desconhecido.\n");
+                        startSystem(); 
                         break;
                 }
             }
         } else {
             System.out.println("Credenciais inválidas.");
+            startSystem();
         }
 
         scanner.close();
@@ -103,7 +105,7 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
         boolean continuarGerenciamentoAluno = true;
 
         while (continuarGerenciamentoAluno) {
-            System.out.println("Selecione a opção desejada.\n1 - Cadastrar aluno\n2 - Consultar aluno\n3 - Atualizar aluno\n4 - Remover aluno\n5 - Voltar ao menu principal");
+            System.out.println("Selecione a opção desejada:\n1 - Cadastrar aluno\n2 - Consultar aluno\n3 - Atualizar aluno\n4 - Remover aluno\n5 - Voltar ao menu principal");
             int opcaoAluno = scanner.nextInt();
             scanner.nextLine();
 
@@ -118,10 +120,7 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
 
                     usuarioService.cadastrarAluno(nomeCompleto, cpf);
                     clearScreen();
-                    System.out.println("Aluno cadastrado com sucesso!");
-                    System.out.println("\nPressione Enter para voltar ao menu.");
-                    scanner.nextLine();  // Espera o usuário pressionar Enter
-                    clearScreen();
+                    System.out.println("Aluno cadastrado com sucesso!\n");
                     break;
                 case 2:
                     clearScreen();
@@ -130,19 +129,55 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                     Aluno aluno = alunoService.consultarAlunoCPF(cpfPesquisa);
                     clearScreen();
                     if (aluno != null) {
-                        System.out.println("Dados do aluno\n" + "Nome completo: " + aluno.getNome() + "\nCPF: " + aluno.getCPF() + "\nMatrícula: " + aluno.getMatricula());
+                        System.out.println("Dados do aluno:\n" + "Nome completo: " + aluno.getNome() + "\nCPF: " + aluno.getCPF() + "\nMatrícula: " + aluno.getMatricula());
                     } else {
-                        System.out.println("Aluno não encontrado.");
+                        System.out.println("Aluno não encontrado.\n");
                     }
                     System.out.println("\nPressione Enter para voltar ao menu.");
                     scanner.nextLine();  // Espera o usuário pressionar Enter
                     clearScreen();
                     break;
                 case 3:
-                    // Lógica para atualização de aluno
+                    clearScreen();
+                    System.out.print("Digite o CPF do aluno: ");
+                    String cpfPesquisa2 = scanner.nextLine();
+                    Aluno aluno2 = alunoService.consultarAlunoCPF(cpfPesquisa2);
+                    clearScreen();
+                    if (aluno2 != null) {
+                        System.out.println("Dados do aluno:\n" + "Nome completo: " + aluno2.getNome() + "\nCPF: " + aluno2.getCPF() + "\nMatrícula: " + aluno2.getMatricula());
+                        System.out.print("\n\nDigite o novo nome completo do aluno: ");
+                        String novoNomeCompleto = scanner.nextLine();
+                        aluno2.setNome(novoNomeCompleto);
+                        alunoService.salvarAluno(aluno2);
+                        clearScreen();
+                        System.out.println("Aluno atualizado com sucesso!\n");
+                    } else {
+                        clearScreen();
+                        System.out.println("Aluno não encontrado.\n");
+                    }
                     break;
                 case 4:
-                    // Lógica para remoção de aluno
+                    clearScreen();
+                    System.out.print("Digite o CPF do aluno: ");
+                    String cpfPesquisa3 = scanner.nextLine();
+                    Aluno aluno3 = alunoService.consultarAlunoCPF(cpfPesquisa3);
+                    clearScreen();
+                    if (aluno3 != null) {
+                        System.out.println("Dados do aluno:\n" + "Nome completo: " + aluno3.getNome() + "\nCPF: " + aluno3.getCPF() + "\nMatrícula: " + aluno3.getMatricula());
+                        System.out.println("\nTem certeza que deseja remover o aluno do sistema?\n1 - Sim\n2 - Não");
+                        int confirmacao = scanner.nextInt();
+                        scanner.nextLine();
+                        if (confirmacao == 1) {
+                            alunoService.removerAluno(aluno3);
+                            clearScreen();
+                            System.out.println("Aluno removido com sucesso!\n");
+                        } else {
+                            clearScreen();
+                            System.out.println("Operação cancelada.\n");
+                        }
+                    } else {
+                        System.out.println("Aluno não encontrado.\n");
+                    }
                     break;
                 case 5:
                     continuarGerenciamentoAluno = false; // Sai do loop de gerenciamento de alunos
@@ -153,7 +188,7 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                     break;
             }
         }
-    }
+    }    
 
     private static void clearScreen() {
         try {
