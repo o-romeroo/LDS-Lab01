@@ -54,15 +54,26 @@ public class Disciplina {
 
 
 
-    public Disciplina(String nome, boolean disciplinaAtiva, boolean disciplinaDisponivel, boolean obrigatoria, boolean optativa, double preco, Professor professor, List<Aluno> alunos, Long id) {
+    public Disciplina(String nome, boolean obrigatoria, boolean optativa, double preco, Professor professor, List<Aluno> alunos, Long id) {
         this.nome = nome;
-        this.disciplinaAtiva = disciplinaAtiva;
-        this.disciplinaDisponivel = disciplinaDisponivel;
+        this.disciplinaAtiva = false;
+        this.disciplinaDisponivel = true;
         this.obrigatoria = obrigatoria;
         this.optativa = optativa;
         this.preco = preco;
         this.professor = professor;
         this.alunos = alunos;
+        this.id = id;
+    }
+
+    public Disciplina(String nome, boolean obrigatoria, boolean optativa, double preco, Professor professor, Long id) {
+        this.nome = nome;
+        this.disciplinaAtiva = false;
+        this.disciplinaDisponivel = true;
+        this.obrigatoria = obrigatoria;
+        this.optativa = optativa;
+        this.preco = preco;
+        this.professor = professor;
         this.id = id;
     }
 
@@ -159,17 +170,6 @@ public class Disciplina {
 
     public void setPreco(double preco) {
         this.preco = preco;
-    }
-
-    public boolean verificaStatusDisciplina() {
-        // need to discuss
-        return true;
-    }
-
-
-    public boolean verificaDisponibilidadeDisciplina() {
-        // need to discuss
-        return true;
     }
 
     @Override

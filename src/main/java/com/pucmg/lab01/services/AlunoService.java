@@ -26,7 +26,7 @@ public class AlunoService {
         Aluno aluno = consultarAluno(idAluno);
 
         // Verifica status e disponibilidade da disciplina
-        if (!disciplina.verificaStatusDisciplina() || !disciplina.verificaDisponibilidadeDisciplina()) {
+        if (!disciplinaService.verificaStatusDisciplina(nomeDisciplina) || !disciplinaService.verificaDisponibilidadeDisciplina(nomeDisciplina)) {
             throw new IllegalStateException("Disciplina não está disponível para matrícula.");
         }
 
@@ -91,4 +91,12 @@ public class AlunoService {
         alunoRepository.save(aluno);
     }
 
+    @Transactional
+    public void consultarDisciplinasCursadas(Long idAluno) {
+        Aluno aluno = consultarAluno(idAluno);
+        System.out.println("Disciplinas cursadas por " + aluno.getNome() + ":");
+        aluno.getDisciplinas().forEach(disciplina -> {
+            System.out.println(disciplina.getNome());
+        });
+    }
 }
