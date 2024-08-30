@@ -29,7 +29,6 @@ public class Usuario {
     
     @Column(nullable = false)
     @Size(min = 3, max = 20)
-
     private String password;
    
     @Id

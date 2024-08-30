@@ -34,7 +34,7 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
     private void startSystem() {
         Scanner scanner = new Scanner(System.in);
         clearScreen();
-        System.out.println("Bem-vindo ao Sistema de Matrículas!");
+        System.out.println("Bem-vindo ao Sistema de Matrículas!\n");
 
         System.out.print("Digite seu login: ");
         String login = scanner.nextLine();
@@ -72,9 +72,10 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                                 // Lógica para gerenciar disciplina
                                 break;
                             case 4:
-                                continuarSistema = false; // Sai do loop principal
+                                startSystem(); // Sai do loop principal
                                 break;
                             default:
+                                clearScreen();
                                 System.out.println("Opção inválida.");
                                 break;
                         }
@@ -117,8 +118,8 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
 
                     usuarioService.cadastrarAluno(nomeCompleto, cpf);
                     clearScreen();
-                    System.out.println("Aluno cadastrado com sucesso!\n");
-                    System.out.println("Pressione Enter para voltar ao menu.");
+                    System.out.println("Aluno cadastrado com sucesso!");
+                    System.out.println("\nPressione Enter para voltar ao menu.");
                     scanner.nextLine();  // Espera o usuário pressionar Enter
                     clearScreen();
                     break;
@@ -147,6 +148,7 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                     continuarGerenciamentoAluno = false; // Sai do loop de gerenciamento de alunos
                     break;
                 default:
+                    clearScreen();
                     System.out.println("Opção inválida.");
                     break;
             }

@@ -57,11 +57,6 @@ public class Aluno extends Usuario {
     }
 
 
-    public boolean efetuarMatricula(List<Disciplina> disciplinas) {
-        // Lógica para efetuar a matrícula
-        return true;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

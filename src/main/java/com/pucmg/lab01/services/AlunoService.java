@@ -1,5 +1,7 @@
 package com.pucmg.lab01.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pucmg.lab01.models.Aluno;
@@ -98,5 +100,10 @@ public class AlunoService {
         aluno.getDisciplinas().forEach(disciplina -> {
             System.out.println(disciplina.getNome());
         });
+    }
+
+     public boolean efetuarMatricula(List<Disciplina> disciplinas) {
+        // Lógica para efetuar a matrícula
+        return true;
     }
 }
