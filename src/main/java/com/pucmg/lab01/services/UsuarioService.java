@@ -52,9 +52,10 @@ public class UsuarioService {
         // Gerar login e senha aleatórios
         String login = gerarLoginAleatorio(nomeCompleto);
         String senha = gerarSenhaAleatoria(nomeCompleto);
+        int matricula = new Random().nextInt(90000000) + 10000000; // Gera um número aleatório de 100000 a 999999
 
         // Criar a instância de Aluno
-        Aluno novoAluno = new Aluno(nomeCompleto, login, senha, cpf, List.of());
+        Aluno novoAluno = new Aluno(nomeCompleto, login, senha, cpf, List.of(), matricula);
 
         // Verificar se o aluno já existe pelo CPF
         if (alunoRepository.findByCPF(cpf).isPresent()) {

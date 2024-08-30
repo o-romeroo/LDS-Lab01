@@ -79,6 +79,12 @@ public class AlunoService {
         return alunoRepository.findById(idAluno)
             .orElseThrow(() -> new IllegalArgumentException("Aluno com ID " + idAluno + " não encontrado."));
     }
+
+    @Transactional
+    public Aluno consultarAlunoCPF(String cpf) {
+        return alunoRepository.findByCPF(cpf)
+            .orElseThrow(() -> new IllegalArgumentException("Aluno com CPF " + cpf + " não encontrado."));
+    }
     
     @Transactional
     public void salvarAluno(Aluno aluno){
