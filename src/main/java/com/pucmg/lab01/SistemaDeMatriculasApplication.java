@@ -119,194 +119,257 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
 
     private void gerenciarAluno(Scanner scanner) {
         boolean continuarGerenciamentoAluno = true;
-
+    
         while (continuarGerenciamentoAluno) {
-            System.out.println("Selecione a opção desejada:\n1 - Cadastrar aluno\n2 - Consultar aluno\n3 - Atualizar aluno\n4 - Remover aluno\n5 - Voltar ao menu principal");
-            int opcaoAluno = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (opcaoAluno) {
-                case 1:
-                    clearScreen();
-                    System.out.print("Digite o nome completo do aluno: ");
-                    String nomeCompleto = scanner.nextLine();
-
-                    System.out.print("Digite o CPF do aluno: ");
-                    String cpf = scanner.nextLine();
-
-                    usuarioService.cadastrarAluno(nomeCompleto, cpf);
-                    clearScreen();
-                    System.out.println("Aluno cadastrado com sucesso!\n");
-                    break;
-                case 2:
-                    clearScreen();
-                    System.out.print("Digite o CPF do aluno: ");
-                    String cpfPesquisa = scanner.nextLine();
-                    Aluno aluno = alunoService.consultarAlunoCPF(cpfPesquisa);
-                    clearScreen();
-                    if (aluno != null) {
-                        System.out.println("Dados do aluno:\n" + "Nome completo: " + aluno.getNome() + "\nCPF: " + aluno.getCPF() + "\nMatrícula: " + aluno.getMatricula());
-                    } else {
-                        System.out.println("Aluno não encontrado.\n");
-                    }
-                    System.out.println("\nPressione Enter para voltar ao menu.");
-                    scanner.nextLine();  // Espera o usuário pressionar Enter
-                    clearScreen();
-                    break;
-                case 3:
-                    clearScreen();
-                    System.out.print("Digite o CPF do aluno: ");
-                    String cpfPesquisa2 = scanner.nextLine();
-                    Aluno aluno2 = alunoService.consultarAlunoCPF(cpfPesquisa2);
-                    clearScreen();
-                    if (aluno2 != null) {
-                        System.out.println("Dados do aluno:\n" + "Nome completo: " + aluno2.getNome() + "\nCPF: " + aluno2.getCPF() + "\nMatrícula: " + aluno2.getMatricula());
-                        System.out.print("\n\nDigite o novo nome completo do aluno: ");
-                        String novoNomeCompleto = scanner.nextLine();
-                        aluno2.setNome(novoNomeCompleto);
-                        alunoService.salvarAluno(aluno2);
+            try {
+                System.out.println("Selecione a opção desejada:\n1 - Cadastrar aluno\n2 - Consultar aluno\n3 - Atualizar aluno\n4 - Remover aluno\n5 - Voltar ao menu principal");
+                int opcaoAluno = scanner.nextInt();
+                scanner.nextLine();
+    
+                switch (opcaoAluno) {
+                    case 1:
                         clearScreen();
-                        System.out.println("Aluno atualizado com sucesso!\n");
-                    } else {
-                        clearScreen();
-                        System.out.println("Aluno não encontrado.\n");
-                    }
-                    break;
-                case 4:
-                    clearScreen();
-                    System.out.print("Digite o CPF do aluno: ");
-                    String cpfPesquisa3 = scanner.nextLine();
-                    Aluno aluno3 = alunoService.consultarAlunoCPF(cpfPesquisa3);
-                    clearScreen();
-                    if (aluno3 != null) {
-                        System.out.println("Dados do aluno:\n" + "Nome completo: " + aluno3.getNome() + "\nCPF: " + aluno3.getCPF() + "\nMatrícula: " + aluno3.getMatricula());
-                        System.out.println("\nTem certeza que deseja remover o aluno do sistema?\n1 - Sim\n2 - Não");
-                        int confirmacao = scanner.nextInt();
-                        scanner.nextLine();
-                        if (confirmacao == 1) {
-                            alunoService.removerAluno(aluno3);
+                        System.out.print("Digite o nome completo do aluno: ");
+                        String nomeCompleto = scanner.nextLine().trim();
+    
+                        System.out.print("Digite o CPF do aluno: ");
+                        String cpf = scanner.nextLine().trim();
+    
+                        try {
+                            usuarioService.cadastrarAluno(nomeCompleto, cpf);
                             clearScreen();
-                            System.out.println("Aluno removido com sucesso!\n");
-                        } else {
-                            clearScreen();
-                            System.out.println("Operação cancelada.\n");
+                            System.out.println("Aluno cadastrado com sucesso!\n");
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Erro ao cadastrar aluno: " + e.getMessage() + "\n");
                         }
-                    } else {
-                        System.out.println("Aluno não encontrado.\n");
-                    }
-                    break;
-                case 5:
-                    continuarGerenciamentoAluno = false; // Sai do loop de gerenciamento de alunos
-                    break;
-                default:
-                    clearScreen();
-                    System.out.println("Opção inválida.");
-                    break;
+                        break;
+    
+                    case 2:
+                        clearScreen();
+                        System.out.print("Digite o CPF do aluno: ");
+                        String cpfPesquisa = scanner.nextLine().trim();
+    
+                        try {
+                            Aluno aluno = alunoService.consultarAlunoCPF(cpfPesquisa);
+                            clearScreen();
+                            if (aluno != null) {
+                                System.out.println("Dados do aluno:\n" + "Nome completo: " + aluno.getNome() + "\nCPF: " + aluno.getCPF() + "\nMatrícula: " + aluno.getMatricula());
+                            } else {
+                                System.out.println("Aluno não encontrado.\n");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Erro ao consultar aluno: " + e.getMessage() + "\n");
+                        }
+                        System.out.println("\nPressione Enter para voltar ao menu.");
+                        scanner.nextLine(); // Espera o usuário pressionar Enter
+                        clearScreen();
+                        break;
+    
+                    case 3:
+                        clearScreen();
+                        System.out.print("Digite o CPF do aluno: ");
+                        String cpfPesquisa2 = scanner.nextLine().trim();
+    
+                        try {
+                            Aluno aluno2 = alunoService.consultarAlunoCPF(cpfPesquisa2);
+                            clearScreen();
+                            if (aluno2 != null) {
+                                System.out.println("Dados do aluno:\n" + "Nome completo: " + aluno2.getNome() + "\nCPF: " + aluno2.getCPF() + "\nMatrícula: " + aluno2.getMatricula());
+                                System.out.print("\n\nDigite o novo nome completo do aluno: ");
+                                String novoNomeCompleto = scanner.nextLine().trim();
+                                aluno2.setNome(novoNomeCompleto);
+                                alunoService.salvarAluno(aluno2);
+                                clearScreen();
+                                System.out.println("Aluno atualizado com sucesso!\n");
+                            } else {
+                                System.out.println("Aluno não encontrado.\n");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Erro ao atualizar aluno: " + e.getMessage() + "\n");
+                        }
+                        break;
+    
+                    case 4:
+                        clearScreen();
+                        System.out.print("Digite o CPF do aluno: ");
+                        String cpfPesquisa3 = scanner.nextLine().trim();
+    
+                        try {
+                            Aluno aluno3 = alunoService.consultarAlunoCPF(cpfPesquisa3);
+                            clearScreen();
+                            if (aluno3 != null) {
+                                System.out.println("Dados do aluno:\n" + "Nome completo: " + aluno3.getNome() + "\nCPF: " + aluno3.getCPF() + "\nMatrícula: " + aluno3.getMatricula());
+                                System.out.println("\nTem certeza que deseja remover o aluno do sistema?\n1 - Sim\n2 - Não");
+                                int confirmacao = scanner.nextInt();
+                                scanner.nextLine();
+                                if (confirmacao == 1) {
+                                    alunoService.removerAluno(aluno3);
+                                    clearScreen();
+                                    System.out.println("Aluno removido com sucesso!\n");
+                                } else {
+                                    clearScreen();
+                                    System.out.println("Operação cancelada.\n");
+                                }
+                            } else {
+                                System.out.println("Aluno não encontrado.\n");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Erro ao remover aluno: " + e.getMessage() + "\n");
+                        }
+                        break;
+    
+                    case 5:
+                        continuarGerenciamentoAluno = false; // Sai do loop de gerenciamento de alunos
+                        break;
+    
+                    default:
+                        clearScreen();
+                        System.out.println("Opção inválida.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, tente novamente.");
+                scanner.nextLine(); // Limpa o buffer do scanner
+            } catch (Exception e) {
+                System.out.println("Erro inesperado: " + e.getMessage());
             }
         }
-    }    
+    }
+    
 
     private void gerenciarProfessor(Scanner scanner) {
         boolean continuarGerenciamentoProfessor = true;
     
         while (continuarGerenciamentoProfessor) {
-            System.out.println("Selecione a opção desejada:\n1 - Cadastrar professor\n2 - Consultar professor\n3 - Atualizar professor\n4 - Remover professor\n5 - Voltar ao menu principal");
-            int opcaoProfessor = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                System.out.println("Selecione a opção desejada:\n1 - Cadastrar professor\n2 - Consultar professor\n3 - Atualizar professor\n4 - Remover professor\n5 - Voltar ao menu principal");
+                int opcaoProfessor = scanner.nextInt();
+                scanner.nextLine();
     
-            switch (opcaoProfessor) {
-                case 1:
-                    clearScreen();
-                    System.out.print("Digite o nome completo do professor: ");
-                    String nomeCompleto = scanner.nextLine();
-    
-                    System.out.print("Digite o CPF do professor: ");
-                    String cpf = scanner.nextLine();
-    
-                    usuarioService.cadastrarProfessor(nomeCompleto, cpf);
-                    clearScreen();
-                    System.out.println("Professor cadastrado com sucesso!\n");
-                    break;
-                case 2:
-                    clearScreen();
-                    System.out.print("Digite o CPF do professor: ");
-                    String cpfPesquisa = scanner.nextLine();
-                    Professor professor = professorService.consultarProfessorCPF(cpfPesquisa);
-                    clearScreen();
-                    if (professor != null) {
-                        String disciplinasLeciona = (professor.getDisciplinas() != null && !professor.getDisciplinas().isEmpty()) ?
-                            professor.getDisciplinas().stream()
-                                    .map(Disciplina::getNome) // Assuming Disciplina has a getNome() method
-                                    .collect(Collectors.joining(", ")) :
-                            "Não está vinculado em nenhuma disciplina no momento!";
-                        
-                        System.out.println("Dados do professor:\n" + 
-                                           "Nome completo: " + professor.getNome() + 
-                                           "\nCPF: " + professor.getCPF() + 
-                                           "\nDisciplinas que leciona: " + disciplinasLeciona);
-                    } else {
-                        System.out.println("Professor não encontrado.\n");
-                    }
-                    System.out.println("\nPressione Enter para voltar ao menu.");
-                    scanner.nextLine();  // Espera o usuário pressionar Enter
-                    clearScreen();
-                    break;
-                case 3:
-                    clearScreen();
-                    System.out.print("Digite o CPF do professor: ");
-                    String cpfPesquisa2 = scanner.nextLine();
-                    Professor professor2 = professorService.consultarProfessorCPF(cpfPesquisa2);
-                    clearScreen();
-                    if (professor2 != null) {
-                        System.out.println("Dados do professor:\n" + 
-                                           "Nome completo: " + professor2.getNome() + 
-                                           "\nCPF: " + professor2.getCPF());
-                        System.out.print("\n\nDigite o novo nome completo do professor: ");
-                        String novoNomeCompleto = scanner.nextLine();
-                        professor2.setNome(novoNomeCompleto);
-                        professorService.salvarProfessor(professor2);
+                switch (opcaoProfessor) {
+                    case 1:
                         clearScreen();
-                        System.out.println("Professor atualizado com sucesso!\n");
-                    } else {
-                        clearScreen();
-                        System.out.println("Professor não encontrado.\n");
-                    }
-                    break;
-                case 4:
-                    clearScreen();
-                    System.out.print("Digite o CPF do professor: ");
-                    String cpfPesquisa3 = scanner.nextLine();
-                    Professor professor3 = professorService.consultarProfessorCPF(cpfPesquisa3);
-                    clearScreen();
-                    if (professor3 != null) {
-                        System.out.println("Dados do professor:\n" + 
-                                           "Nome completo: " + professor3.getNome() + 
-                                           "\nCPF: " + professor3.getCPF());
-                        System.out.println("\nTem certeza que deseja remover o professor do sistema?\n1 - Sim\n2 - Não");
-                        int confirmacao = scanner.nextInt();
-                        scanner.nextLine();
-                        if (confirmacao == 1) {
-                            professorService.removerProfessor(professor3);
+                        System.out.print("Digite o nome completo do professor: ");
+                        String nomeCompleto = scanner.nextLine().trim();
+    
+                        System.out.print("Digite o CPF do professor: ");
+                        String cpf = scanner.nextLine().trim();
+    
+                        try {
+                            usuarioService.cadastrarProfessor(nomeCompleto, cpf);
                             clearScreen();
-                            System.out.println("Professor removido com sucesso!\n");
-                        } else {
-                            clearScreen();
-                            System.out.println("Operação cancelada.\n");
+                            System.out.println("Professor cadastrado com sucesso!\n");
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Erro ao cadastrar professor: " + e.getMessage() + "\n");
                         }
-                    } else {
-                        System.out.println("Professor não encontrado.\n");
-                    }
-                    break;
-                case 5:
-                    continuarGerenciamentoProfessor = false; // Sai do loop de gerenciamento de professores
-                    break;
-                default:
-                    clearScreen();
-                    System.out.println("Opção inválida.");
-                    break;
+                        break;
+    
+                    case 2:
+                        clearScreen();
+                        System.out.print("Digite o CPF do professor: ");
+                        String cpfPesquisa = scanner.nextLine().trim();
+                        
+                        try {
+                            Professor professor = professorService.consultarProfessorCPF(cpfPesquisa);
+                            clearScreen();
+                            if (professor != null) {
+                                String disciplinasLeciona = (professor.getDisciplinas() != null && !professor.getDisciplinas().isEmpty()) ?
+                                    professor.getDisciplinas().stream()
+                                            .map(Disciplina::getNome)
+                                            .collect(Collectors.joining(", ")) :
+                                    "Não está vinculado em nenhuma disciplina no momento!";
+                                
+                                System.out.println("Dados do professor:\n" + 
+                                                   "Nome completo: " + professor.getNome() + 
+                                                   "\nCPF: " + professor.getCPF() + 
+                                                   "\nDisciplinas que leciona: " + disciplinasLeciona);
+                            } else {
+                                System.out.println("Professor não encontrado.\n");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Erro ao consultar professor: " + e.getMessage() + "\n");
+                        }
+                        System.out.println("\nPressione Enter para voltar ao menu.");
+                        scanner.nextLine();
+                        clearScreen();
+                        break;
+    
+                    case 3:
+                        clearScreen();
+                        System.out.print("Digite o CPF do professor: ");
+                        String cpfPesquisa2 = scanner.nextLine().trim();
+    
+                        try {
+                            Professor professor2 = professorService.consultarProfessorCPF(cpfPesquisa2);
+                            clearScreen();
+                            if (professor2 != null) {
+                                System.out.println("Dados do professor:\n" + 
+                                                   "Nome completo: " + professor2.getNome() + 
+                                                   "\nCPF: " + professor2.getCPF());
+                                System.out.print("\n\nDigite o novo nome completo do professor: ");
+                                String novoNomeCompleto = scanner.nextLine().trim();
+                                professor2.setNome(novoNomeCompleto);
+                                professorService.salvarProfessor(professor2);
+                                clearScreen();
+                                System.out.println("Professor atualizado com sucesso!\n");
+                            } else {
+                                clearScreen();
+                                System.out.println("Professor não encontrado.\n");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Erro ao atualizar professor: " + e.getMessage() + "\n");
+                        }
+                        break;
+    
+                    case 4:
+                        clearScreen();
+                        System.out.print("Digite o CPF do professor: ");
+                        String cpfPesquisa3 = scanner.nextLine().trim();
+    
+                        try {
+                            Professor professor3 = professorService.consultarProfessorCPF(cpfPesquisa3);
+                            clearScreen();
+                            if (professor3 != null) {
+                                System.out.println("Dados do professor:\n" + 
+                                                   "Nome completo: " + professor3.getNome() + 
+                                                   "\nCPF: " + professor3.getCPF());
+                                System.out.println("\nTem certeza que deseja remover o professor do sistema?\n1 - Sim\n2 - Não");
+                                int confirmacao = scanner.nextInt();
+                                scanner.nextLine();
+                                if (confirmacao == 1) {
+                                    professorService.removerProfessor(professor3);
+                                    clearScreen();
+                                    System.out.println("Professor removido com sucesso!\n");
+                                } else {
+                                    clearScreen();
+                                    System.out.println("Operação cancelada.\n");
+                                }
+                            } else {
+                                System.out.println("Professor não encontrado.\n");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Erro ao remover professor: " + e.getMessage() + "\n");
+                        }
+                        break;
+    
+                    case 5:
+                        continuarGerenciamentoProfessor = false; // Sai do loop de gerenciamento de professores
+                        break;
+    
+                    default:
+                        clearScreen();
+                        System.out.println("Opção inválida.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, tente novamente.");
+                scanner.nextLine(); // Limpa o buffer do scanner
+            } catch (Exception e) {
+                System.out.println("Erro inesperado: " + e.getMessage());
             }
         }
     }
+    
 
     private void gerenciarDisciplina(Scanner scanner) {
         boolean continuarGerenciamentoDisciplina = true;
