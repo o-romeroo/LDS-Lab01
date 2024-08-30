@@ -28,7 +28,7 @@ public class ProfessorService {
     }
 
     public List<Aluno> consultarAlunosDisciplina(String nomeDisciplina) {
-        Disciplina disciplina = disciplinaService.consultarDisciplina(nomeDisciplina);
+        Disciplina disciplina = disciplinaService.consultarDisciplinaPorNome(nomeDisciplina);
 
         if (!disciplinaService.verificaStatusDisciplina(nomeDisciplina) || !disciplinaService.verificaDisponibilidadeDisciplina(nomeDisciplina)) {
             throw new IllegalStateException("Disciplina não está disponível, logo não possui alunos.");

@@ -1,11 +1,14 @@
 package com.pucmg.lab01;
 
 import com.pucmg.lab01.models.Aluno;
+import com.pucmg.lab01.models.Curso;
 import com.pucmg.lab01.models.Disciplina;
 import com.pucmg.lab01.models.Professor;
 import com.pucmg.lab01.models.Secretario;
 import com.pucmg.lab01.models.Usuario;
 import com.pucmg.lab01.services.AlunoService;
+import com.pucmg.lab01.services.CursoService;
+import com.pucmg.lab01.services.DisciplinaService;
 import com.pucmg.lab01.services.ProfessorService;
 import com.pucmg.lab01.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,12 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
 
     @Autowired
     private ProfessorService professorService;
+
+    @Autowired
+    private DisciplinaService disciplinaService;    
+
+    @Autowired
+    private CursoService cursoService;
 
     public static void main(String[] args) {
         SpringApplication.run(SistemaDeMatriculasApplication.class, args);
@@ -62,7 +71,7 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                         clearScreen();
                         Secretario secretario = (Secretario) usuario;
                         System.out.println("Olá, " + secretario.getNome() + "! O que deseja realizar?\n");
-                        System.out.println("1 - Gerenciar aluno\n2 - Gerenciar professor\n3 - Gerenciar disciplina\n4 - Sair");
+                        System.out.println("1 - Gerenciar aluno\n2 - Gerenciar professor\n3 - Gerenciar disciplinas\n4 - Sair");
                         int opcao = scanner.nextInt();
                         scanner.nextLine();
 
@@ -76,7 +85,8 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                                 gerenciarProfessor(scanner);
                                 break;
                             case 3:
-                                // Lógica para gerenciar disciplina
+                                clearScreen();
+                                gerenciarDisciplina(scanner);
                                 break;
                             case 4:
                                 startSystem(); // Sai do loop principal
@@ -297,6 +307,157 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
             }
         }
     }
+
+    private void gerenciarDisciplina(Scanner scanner) {
+        boolean continuarGerenciamentoDisciplina = true;
+    
+        while (continuarGerenciamentoDisciplina) {
+            System.out.println("Selecione a opção desejada:\n1 - Cadastrar disciplina\n2 - Consultar disciplina\n3 - Atualizar disciplina\n4 - Remover disciplina\n5 - Voltar ao menu principal");
+            int opcaoDisciplina = scanner.nextInt();
+            scanner.nextLine();
+    
+            switch (opcaoDisciplina) {
+                case 1:
+                    clearScreen();
+                    Disciplina disciplina = new Disciplina();
+                    System.out.print("Digite o nome da disciplina: ");
+                    String nomeDisciplina = scanner.nextLine();
+                    disciplina.setNome(nomeDisciplina);
+                
+                    System.out.print("Digite o CPF do professor que leciona a disciplina: ");
+                    String cpfProfessor = scanner.nextLine();
+                    clearScreen();
+    
+                    Professor professor = professorService.consultarProfessorCPF(cpfProfessor);
+                    if (professor != null) {
+                        disciplina.setProfessor(professor);
+                        clearScreen();
+                        System.out.println("Qual o curso da disciplina?");
+                        List<Curso> cursos = cursoService.getAllCursos();
+
+                        // Verificar se há cursos no banco de dados
+                        if (cursos.isEmpty()) {
+                            System.out.println("Não há cursos cadastrados no momento./n");
+                            clearScreen();
+                        } else {
+                            System.out.println("Cursos disponíveis:");
+                            // Listar todos os cursos com seus índices
+                            for (int i = 0; i < cursos.size(); i++) {
+                                Curso curso = cursos.get(i);
+                                System.out.println(i+1 + " - " + curso.getNome()); // Exibe o índice e o nome do curso
+                            }
+                            int selecionarCurso = scanner.nextInt();
+                            scanner.nextLine();
+                            if (selecionarCurso == 1){
+                                disciplina.setCurso(cursos.get(0));
+                                
+                            }
+                        }   
+                        clearScreen();
+                        System.out.println("É uma disciplina obrigatória ou optativa?\n1 - Obrigatória\n2 - Optativa");
+                        int tipoDisciplina = scanner.nextInt();
+                        scanner.nextLine();
+                        if (tipoDisciplina == 1) {
+                            disciplina.setObrigatoria(true);
+                            disciplina.setOptativa(false);
+                        } else if (tipoDisciplina == 2) {
+                            disciplina.setOptativa(true);
+                            disciplina.setObrigatoria(false);
+                        } else {
+                            clearScreen();
+                            System.out.println("Opção inválida.\n");
+                        }
+                        clearScreen();
+                        System.out.println("Qual o preço da disciplina?");
+                        double precoDisciplina = scanner.nextDouble();
+                        scanner.nextLine();
+                        disciplina.setPreco(precoDisciplina);
+                        disciplina.setDisciplinaAtiva(false);
+                        disciplina.setDisciplinaDisponivel(true);
+                        disciplinaService.salvarDisciplina(disciplina);
+                        clearScreen();
+                        System.out.println("Disciplina cadastrada com sucesso!\n");
+                    } else {
+                        clearScreen();
+                        System.out.println("Professor não encontrado. Não foi possível cadastrar a disciplina.\n");
+                    }
+                    break;
+                case 2:
+                    clearScreen();
+                    System.out.print("Digite o nome da disciplina: ");
+                    String nomeDisciplinaConsulta = scanner.nextLine();
+                    Disciplina disciplina2 = disciplinaService.consultarDisciplinaPorNome(nomeDisciplinaConsulta);
+                    clearScreen();
+                    if (disciplina2 != null) {
+                        String professorNome = (disciplina2.getProfessor() != null) ? 
+                            disciplina2.getProfessor().getNome() : 
+                            "Nenhum professor vinculado no momento";
+                        
+                        System.out.println("Dados da disciplina2:\n" + 
+                                           "Nome: " + disciplina2.getNome() + 
+                                           "\nProfessor que leciona: " + professorNome);
+                    } else {
+                        System.out.println("Disciplina não encontrada.\n");
+                    }
+                    System.out.println("\nPressione Enter para voltar ao menu.");
+                    scanner.nextLine();  // Espera o usuário pressionar Enter
+                    clearScreen();
+                    break;
+                case 3:
+                    clearScreen();
+                    System.out.print("Digite o nome da disciplina: ");
+                    String nomeDisciplinaAtualizar = scanner.nextLine();
+                    Disciplina disciplinaAtualizar = disciplinaService.consultarDisciplinaPorNome(nomeDisciplinaAtualizar);
+                    clearScreen();
+                    if (disciplinaAtualizar != null) {
+                        System.out.println("Dados da disciplina:\n" + 
+                                           "Nome: " + disciplinaAtualizar.getNome());
+                        System.out.print("\nDigite o novo nome da disciplina: ");
+                        String novoNomeDisciplina = scanner.nextLine();
+                        disciplinaAtualizar.setNome(novoNomeDisciplina);
+                        disciplinaService.salvarDisciplina(disciplinaAtualizar);
+                        clearScreen();
+                        System.out.println("Disciplina atualizada com sucesso!\n");
+                    } else {
+                        clearScreen();
+                        System.out.println("Disciplina não encontrada.\n");
+                    }
+                    break;
+                case 4:
+                    clearScreen();
+                    System.out.print("Digite o nome da disciplina: ");
+                    String nomeDisciplinaRemover = scanner.nextLine();
+                    Disciplina disciplinaRemover = disciplinaService.consultarDisciplinaPorNome(nomeDisciplinaRemover);
+                    clearScreen();
+                    if (disciplinaRemover != null) {
+                        System.out.println("Dados da disciplina:\n" + 
+                                           "Nome: " + disciplinaRemover.getNome());
+                        System.out.println("\nTem certeza que deseja remover a disciplina do sistema?\n1 - Sim\n2 - Não");
+                        int confirmacao = scanner.nextInt();
+                        scanner.nextLine();
+                        if (confirmacao == 1) {
+                            disciplinaService.removerDisciplina(disciplinaRemover);
+                            clearScreen();
+                            System.out.println("Disciplina removida com sucesso!\n");
+                        } else {
+                            clearScreen();
+                            System.out.println("Operação cancelada.\n");
+                        }
+                    } else {
+                        System.out.println("Disciplina não encontrada.\n");
+                    }
+                    break;
+                case 5:
+                    continuarGerenciamentoDisciplina = false; // Sai do loop de gerenciamento de disciplinas
+                    break;
+                default:
+                    clearScreen();
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+        }
+    }
+    
     
 
 

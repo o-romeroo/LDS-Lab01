@@ -22,7 +22,7 @@ public class AlunoService {
     @Transactional
     public void matricularDisciplina(String nomeDisciplina, Long idAluno) {
         // Busca a disciplina pelo nome e verifica se ela existe
-        Disciplina disciplina = disciplinaService.consultarDisciplina(nomeDisciplina);
+        Disciplina disciplina = disciplinaService.consultarDisciplinaPorNome(nomeDisciplina);
 
         // Busca o aluno pelo id e verifica se ele existe
         Aluno aluno = consultarAluno(idAluno);
@@ -54,7 +54,7 @@ public class AlunoService {
     @Transactional
     public void cancelarMatriculaDisciplina(String nomeDisciplina, Long idAluno) {
         // Busca a disciplina pelo nome e verifica se ela existe
-        Disciplina disciplina = disciplinaService.consultarDisciplina(nomeDisciplina);
+        Disciplina disciplina = disciplinaService.consultarDisciplinaPorNome(nomeDisciplina);
     
         // Busca o aluno pelo id e verifica se ele existe
         Aluno aluno = consultarAluno(idAluno);

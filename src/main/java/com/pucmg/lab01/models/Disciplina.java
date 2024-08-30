@@ -66,16 +66,18 @@ public class Disciplina {
         this.id = id;
     }
 
-    public Disciplina(String nome, boolean obrigatoria, boolean optativa, double preco, Professor professor, Long id) {
+    public Disciplina(String nome, boolean obrigatoria, boolean optativa, double preco, Curso curso, Professor professor) {
         this.nome = nome;
         this.disciplinaAtiva = false;
         this.disciplinaDisponivel = true;
         this.obrigatoria = obrigatoria;
         this.optativa = optativa;
         this.preco = preco;
+        this.curso = curso;
         this.professor = professor;
-        this.id = id;
     }
+
+
 
     public Disciplina() {
     }   
@@ -170,6 +172,14 @@ public class Disciplina {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public Curso getCurso() {
+        return this.curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
     @Override
