@@ -100,7 +100,7 @@ public class UsuarioService {
         return prefixoSobrenome + randomNum;
     }
     
-    public String recuperarSenhaUser(String login){
+    public String recuperarSenha(String login){
         Optional<Usuario> usuarioOpt = usuarioRepository.findByLogin(login);
 
         if (usuarioOpt.isPresent()) {

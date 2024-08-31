@@ -49,20 +49,28 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
     private void startSystem() {
         Scanner scanner = new Scanner(System.in);
         clearScreen();
+        int opcaoLogin = 0;
         System.out.println("Bem-vindo ao Sistema de Matrículas!\n");
-        System.out.println("O que deseja realizar?");
-        System.out.println("1 - Realizar login\n2 - Recuperar senha");
-
-        int opLogin = 0;
-        opLogin = scanner.nextInt();
-
-        if (opLogin == 2) {
-            scanner.nextLine();
-            System.out.print("Digite seu login: ");
-            String login = scanner.nextLine();
-            System.out.println("A sua senha é: " + usuarioService.recuperarSenhaUser(login));
-            System.out.print("Agora realize seu login.\n");
+        while (opcaoLogin != 1 && opcaoLogin != 2) {
+            try {
+                System.out.println("O que deseja fazer:\n1 - Efetuar login\n2 - Recuperar Senha");
+                opcaoLogin = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, tente novamente.");
+                scanner.nextLine(); 
+            }
         }
+
+        if (opcaoLogin == 2) {
+            System.out.print("Informe seu login: ");
+            String login = scanner.nextLine();
+            recuperarSenha(login, usuarioService);
+            System.out.println("Pressione Enter para voltar ao menu.");
+            scanner.nextLine();
+            startSystem();
+        }
+
         System.out.print("Digite seu login: ");
         String login = scanner.nextLine();
 
@@ -749,6 +757,10 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                 continuarListagem = false; 
             }
         }
+    }
+
+    private static void recuperarSenha(String login, UsuarioService usuarioService) {
+        System.out.println("A senha do login " + login + " é: " + usuarioService.recuperarSenha(login));
     }
 
     private static void clearScreen() {

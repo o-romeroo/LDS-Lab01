@@ -137,19 +137,24 @@ public class AlunoService {
         });
     }
 
-     public boolean efetuarMatricula(Long idAluno) {
+    public boolean efetuarMatricula(Long idAluno) {
         boolean matriculaValida = true;
         Aluno aluno = consultarAluno(idAluno);
         
         for (Disciplina disciplina : aluno.getDisciplinas()) {
-            if(!disciplinaService.verificaStatusDisciplina(disciplina.getNome())) {
-                matriculaValida = false;
-                throw new IllegalStateException("O aluno "+ aluno.getNome() +" não pode se matricular na disciplina " + disciplina.getNome() + " pois ela não atingiu a quantidade de alunos necessários para ocorrer neste semestre.");
-            }
+            try {
+                if(!disciplinaService.verificaStatusDisciplina(disciplina.getNome())) {
+                    matriculaValida = false;
+                    System.err.println("O aluno " + aluno.getNome() + " não pode se matricular na disciplina " + disciplina.getNome() + " pois ela não atingiu a quantidade de alunos necessários para ocorrer neste semestre.");
+                }
 
-            if(!disciplinaService.verificaDisponibilidadeDisciplina(disciplina.getNome())) {
+                if(!disciplinaService.verificaDisponibilidadeDisciplina(disciplina.getNome())) {
+                    matriculaValida = false;
+                    System.err.println("O aluno " + aluno.getNome() + " não pode se matricular na disciplina " + disciplina.getNome() + " pois ela não está disponível para matrícula.");
+                }
+            } catch (Exception e) {
                 matriculaValida = false;
-                throw new IllegalStateException("O aluno "+ aluno.getNome() +" não pode se matricular na disciplina " + disciplina.getNome() + " pois ela não está disponível para matrícula.");
+                System.err.println("Erro ao efetuar matrícula na disciplina " + disciplina.getNome() + ".");
             }
         }
         
