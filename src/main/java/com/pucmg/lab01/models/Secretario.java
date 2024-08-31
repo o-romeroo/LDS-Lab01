@@ -3,10 +3,6 @@ package com.pucmg.lab01.models;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.pucmg.lab01.services.SecretarioService;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
