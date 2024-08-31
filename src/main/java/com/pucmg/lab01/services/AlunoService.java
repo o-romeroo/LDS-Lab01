@@ -20,8 +20,12 @@ public class AlunoService {
     @Transactional
     public void matricularDisciplina(String nomeDisciplina, Long idAluno) {
         // Busca a disciplina pelo nome e verifica se ela existe
-        Disciplina disciplina = disciplinaService.consultarDisciplinaPorNome(nomeDisciplina);
-
+        Disciplina disciplina;
+        if(disciplinaService.consultarDisciplinaPorNome(nomeDisciplina) == null) {
+            throw new RuntimeException("Disciplina não encontrada.");
+        }else{
+            disciplina = disciplinaService.consultarDisciplinaPorNome(nomeDisciplina);
+        }
         // Busca o aluno pelo id e verifica se ele existe
         Aluno aluno = consultarAluno(idAluno);
 
@@ -154,7 +158,7 @@ public class AlunoService {
                 }
             } catch (Exception e) {
                 matriculaValida = false;
-                System.err.println("Erro ao efetuar matrícula na disciplina " + disciplina.getNome() + ".");
+                System.err.println("Erro ao efetuar matrícula na disciplina " + disciplina.getNome());
             }
         }
         
