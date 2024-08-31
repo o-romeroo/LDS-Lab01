@@ -27,16 +27,35 @@ public class AlunoService {
         // Busca o aluno pelo id e verifica se ele existe
         Aluno aluno = consultarAluno(idAluno);
 
+        if(disciplina.getAlunos().contains(aluno) || aluno.getDisciplinas().contains(disciplina)) {
+            throw new IllegalStateException("Aluno já está matriculado na disciplina especificada.");
+        }           
+
         // Verifica status e disponibilidade da disciplina
         if (!disciplinaService.verificaStatusDisciplina(nomeDisciplina) || !disciplinaService.verificaDisponibilidadeDisciplina(nomeDisciplina)) {
             throw new IllegalStateException("Disciplina não está disponível para matrícula.");
         }
 
+        int qtdDisciplinasObrigatorias = 0;
         // Verifica condições de matrícula para disciplinas obrigatórias e optativas
-        boolean podeMatricular = (disciplina.getObrigatoria() && aluno.getDisciplinas().size() <= 4) ||
-                                 (disciplina.getOptativa() && aluno.getDisciplinas().size() <= 2);
+        for (Disciplina disciplinaValida : aluno.getDisciplinas()) {
+            if (disciplinaValida.getObrigatoria()) {
+                qtdDisciplinasObrigatorias++;
+            }
+        }
 
-        if (podeMatricular) {
+        boolean podeMatricularDisciplinaObrigatoria = (qtdDisciplinasObrigatorias < 4);
+
+        int qtdDisciplinasOptativas = 0;
+        for (Disciplina disciplinaValida : aluno.getDisciplinas()) {
+            if (disciplinaValida.getOptativa()) {
+                qtdDisciplinasOptativas++;
+            }
+        }
+
+        boolean podeMatricularDisciplinaOptativa = (qtdDisciplinasOptativas < 2);
+
+        if (podeMatricularDisciplinaObrigatoria && disciplina.getObrigatoria()) {
             // Adiciona o aluno à lista de alunos da disciplina
             disciplina.getAlunos().add(aluno);
             // Adiciona a disciplina à lista de disciplinas do aluno
@@ -46,8 +65,20 @@ public class AlunoService {
             disciplinaService.salvarDisciplina(disciplina);
             salvarAluno(aluno);
         } else {
-            throw new IllegalStateException("Aluno não pode se matricular em mais disciplinas " + 
-                (disciplina.getObrigatoria() ? "obrigatórias." : "optativas."));
+            throw new IllegalStateException("Aluno não pode se matricular em mais disciplinas obrigatórias.");
+        }
+
+        if(podeMatricularDisciplinaOptativa && disciplina.getOptativa()){
+            // Adiciona o aluno à lista de alunos da disciplina
+            disciplina.getAlunos().add(aluno);
+            // Adiciona a disciplina à lista de disciplinas do aluno
+            aluno.getDisciplinas().add(disciplina);
+
+            // Salva as mudanças no banco de dados
+            disciplinaService.salvarDisciplina(disciplina);
+            salvarAluno(aluno);
+        } else {
+            throw new IllegalStateException("Aluno não pode se matricular em mais disciplinas optativas.");
         }
     }
 
@@ -108,8 +139,22 @@ public class AlunoService {
         });
     }
 
-     public boolean efetuarMatricula(List<Disciplina> disciplinas) {
-        // Lógica para efetuar a matrícula
-        return true;
+     public boolean efetuarMatricula(Long idAluno) {
+        boolean matriculaValida = true;
+        Aluno aluno = consultarAluno(idAluno);
+        
+        for (Disciplina disciplina : aluno.getDisciplinas()) {
+            if(!disciplinaService.verificaStatusDisciplina(disciplina.getNome())) {
+                matriculaValida = false;
+                throw new IllegalStateException("O aluno "+ aluno.getNome() +" não pode se matricular na disciplina " + disciplina.getNome() + " pois ela não atingiu a quantidade de alunos necessários para ocorrer neste semestre.");
+            }
+
+            if(!disciplinaService.verificaDisponibilidadeDisciplina(disciplina.getNome())) {
+                matriculaValida = false;
+                throw new IllegalStateException("O aluno "+ aluno.getNome() +" não pode se matricular na disciplina " + disciplina.getNome() + " pois ela não está disponível para matrícula.");
+            }
+        }
+        
+        return matriculaValida;
     }
 }
