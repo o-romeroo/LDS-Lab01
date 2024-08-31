@@ -42,7 +42,6 @@ public class UsuarioService {
     
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
-            // Verifique a senha (considerando que ela não deve ser armazenada em texto simples em sistemas reais)
             if (usuario.getPassword().equals(password)) {
                 return Optional.of(usuario);
             }
@@ -101,5 +100,14 @@ public class UsuarioService {
         return prefixoSobrenome + randomNum;
     }
     
+    public String recuperarSenhaUser(String login){
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByLogin(login);
 
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            return usuario.getPassword();
+        }else {
+            return "";
+        }
+    }
 }

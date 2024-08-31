@@ -50,7 +50,19 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
         Scanner scanner = new Scanner(System.in);
         clearScreen();
         System.out.println("Bem-vindo ao Sistema de Matrículas!\n");
+        System.out.println("O que deseja realizar?");
+        System.out.println("1 - Realizar login\n2 - Recuperar senha");
 
+        int opLogin = 0;
+        opLogin = scanner.nextInt();
+
+        if (opLogin == 2) {
+            scanner.nextLine();
+            System.out.print("Digite seu login: ");
+            String login = scanner.nextLine();
+            System.out.println("A sua senha é: " + usuarioService.recuperarSenhaUser(login));
+            System.out.print("Agora realize seu login.\n");
+        }
         System.out.print("Digite seu login: ");
         String login = scanner.nextLine();
 
