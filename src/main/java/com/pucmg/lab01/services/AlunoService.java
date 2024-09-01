@@ -2,6 +2,7 @@ package com.pucmg.lab01.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pucmg.lab01.models.Aluno;
 import com.pucmg.lab01.models.Disciplina;
 import com.pucmg.lab01.repositories.AlunoRepository;
@@ -66,6 +67,8 @@ public class AlunoService {
             // Salva as mudanças no banco de dados
             disciplinaService.salvarDisciplina(disciplina);
             salvarAluno(aluno);
+
+            System.out.println("Aluno matriculado com sucesso na disciplina " + disciplina.getNome());
         } else {
             throw new IllegalStateException("Aluno não pode se matricular em mais disciplinas obrigatórias.");
         }
@@ -79,6 +82,8 @@ public class AlunoService {
             // Salva as mudanças no banco de dados
             disciplinaService.salvarDisciplina(disciplina);
             salvarAluno(aluno);
+
+            System.out.println("Aluno matriculado com sucesso na disciplina " + disciplina.getNome());
         } else {
             throw new IllegalStateException("Aluno não pode se matricular em mais disciplinas optativas.");
         }
@@ -135,10 +140,15 @@ public class AlunoService {
     @Transactional
     public void consultarDisciplinasCursadas(Long idAluno) {
         Aluno aluno = consultarAluno(idAluno);
-        StringBuilder disciplinasCursadas = new StringBuilder("Disciplinas cursadas por " + aluno.getNome() + ":\n");
-        aluno.getDisciplinas().forEach(disciplina -> disciplinasCursadas.append(disciplina.getNome()).append(", "));
-        disciplinasCursadas.append("realizada com sucesso!\n");
-        System.out.println(disciplinasCursadas.toString());
+        if (disciplinaService.listarDisciplinas().isEmpty()) {
+            System.err.println(aluno.getNome() + " não está matriculado em nenhuma disciplina.");
+            return;
+            
+        }else {
+            StringBuilder disciplinasCursadas = new StringBuilder("Disciplinas cursadas por " + aluno.getNome() + ":\n");
+            aluno.getDisciplinas().forEach(disciplina -> disciplinasCursadas.append(disciplina.getNome()).append(", "));
+            System.out.println(disciplinasCursadas.toString());
+        }
     }
 
     public void efetuarMatricula(Long idAluno) {
