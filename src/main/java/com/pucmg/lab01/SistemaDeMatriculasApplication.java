@@ -687,6 +687,7 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
         }
     }
     
+    
     private void matricularDisciplinaAluno(Scanner scanner, Aluno aluno) {
         boolean continuarMatricula = true;
     
@@ -701,10 +702,9 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                 System.out.println("\nPressione Enter para voltar ao menu.");
                 scanner.nextLine();
                 continuarMatricula = false;  
-                clearScreen();
             } catch (IllegalStateException e) {
                 System.out.println("Erro ao realizar matrícula: " + e.getMessage() + "\n");
-                continuarMatricula = false; 
+                // continuarMatricula = false; 
             }
         }
     }
@@ -736,22 +736,21 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
     
         while (continuarMatricula) {
             try {
+                // Efetua a matrícula para todas as disciplinas
                 alunoService.efetuarMatricula(aluno.getId());
-                StringBuilder disciplinasMatriculadas = new StringBuilder("Matrícula nas disciplinas ");
-                aluno.getDisciplinas().forEach(disciplina -> disciplinasMatriculadas.append(disciplina.getNome()).append(", "));
-                disciplinasMatriculadas.append("realizada com sucesso!\n");
-                System.out.println(disciplinasMatriculadas.toString());
- 
+                
                 System.out.println("\nPressione Enter para voltar ao menu.");
                 scanner.nextLine();
-                continuarMatricula = false;
-                clearScreen();
+                continuarMatricula = false;  
+                // clearScreen();
             } catch (Exception e) {
-                System.out.println("Erro ao realizar matrícula: " + e.getMessage() + "\n");
+                System.out.println("\nPressione Enter para voltar ao menu.");
+                scanner.nextLine();
                 continuarMatricula = false; 
             }
         }
     }
+    
     
     private void listarDisciplinasMatriculadasAluno(Scanner scanner, Aluno aluno) {
         boolean continuarListagem = true;

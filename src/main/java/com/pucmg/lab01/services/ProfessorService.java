@@ -2,6 +2,7 @@ package com.pucmg.lab01.services;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,15 +28,23 @@ public class ProfessorService {
         return professor.getDisciplinas();
     }
 
+    @Transactional
     public List<Aluno> consultarAlunosDisciplina(String nomeDisciplina) {
-        Disciplina disciplina = disciplinaService.consultarDisciplinaPorNome(nomeDisciplina);
+    // Consulta a disciplina pelo nome
+    Disciplina disciplina = disciplinaService.consultarDisciplinaPorNome(nomeDisciplina);
 
-        if (!disciplinaService.verificaStatusDisciplina(nomeDisciplina) || !disciplinaService.verificaDisponibilidadeDisciplina(nomeDisciplina)) {
-            throw new IllegalStateException("Disciplina não está disponível, logo não possui alunos.");
-        }
-
-        return disciplina.getAlunos();
+    // Verifica se a disciplina foi encontrada
+    if (disciplina == null) {
+        throw new IllegalArgumentException("Disciplina não encontrada com o nome: " + nomeDisciplina);
     }
+
+    // Inicializa a lista de alunos para evitar LazyInitializationException, se necessário
+    Hibernate.initialize(disciplina.getAlunos());
+
+    // Retorna a lista de alunos matriculados na disciplina
+    return disciplina.getAlunos();
+}
+
 
     @Transactional
     public Professor consultarProfessor(Long idProfessor) {

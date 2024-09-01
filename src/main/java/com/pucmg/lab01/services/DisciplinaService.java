@@ -86,7 +86,6 @@ public class DisciplinaService {
             disciplina.setDisciplinaAtiva(true);
             disciplinaRepository.save(disciplina);
         }
-
         return status;
     }
 
@@ -101,8 +100,8 @@ public class DisciplinaService {
             disponibilidade = false;
             disciplina.setDisciplinaDisponivel(false);
             disciplinaRepository.save(disciplina);
+           
         }
-
         return disponibilidade;
     }
 
