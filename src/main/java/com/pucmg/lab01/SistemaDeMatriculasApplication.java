@@ -697,7 +697,11 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
     
                 alunoService.matricularDisciplina(nomeDisciplina, aluno.getId());
                 System.out.println("Matrícula em " + nomeDisciplina + " realizada com sucesso!\n");
-                continuarMatricula = false; 
+
+                System.out.println("\nPressione Enter para voltar ao menu.");
+                scanner.nextLine();
+                continuarMatricula = false;  
+                clearScreen();
             } catch (IllegalStateException e) {
                 System.out.println("Erro ao realizar matrícula: " + e.getMessage() + "\n");
                 continuarMatricula = false; 
@@ -716,7 +720,10 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                 alunoService.cancelarMatriculaDisciplina(nomeDisciplina, aluno.getId());
                 System.out.println("Matrícula em " + nomeDisciplina + " cancelada com sucesso!\n");
     
+                System.out.println("\nPressione Enter para voltar ao menu.");
+                scanner.nextLine();
                 continuarCancelamento = false; 
+                clearScreen();
             } catch (IllegalStateException e) {
                 System.out.println("Erro ao cancelar matrícula: " + e.getMessage() + "\n");
                 continuarCancelamento = false; 
@@ -729,15 +736,19 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
     
         while (continuarMatricula) {
             try {
-                // Implemente a lógica para matricular o aluno em todas as disciplinas do semestre.
-                // Você pode precisar adicionar métodos adicionais aos seus serviços para buscar 
-                // as disciplinas disponíveis para o semestre atual.
-    
-                System.out.println("Funcionalidade em desenvolvimento...\n");
-                continuarMatricula = false; // Define para sair do loop após a tentativa de matrícula
+                alunoService.efetuarMatricula(aluno.getId());
+                StringBuilder disciplinasMatriculadas = new StringBuilder("Matrícula nas disciplinas ");
+                aluno.getDisciplinas().forEach(disciplina -> disciplinasMatriculadas.append(disciplina.getNome()).append(", "));
+                disciplinasMatriculadas.append("realizada com sucesso!\n");
+                System.out.println(disciplinasMatriculadas.toString());
+ 
+                System.out.println("\nPressione Enter para voltar ao menu.");
+                scanner.nextLine();
+                continuarMatricula = false;
+                clearScreen();
             } catch (Exception e) {
                 System.out.println("Erro ao realizar matrícula: " + e.getMessage() + "\n");
-                continuarMatricula = false; // Define para sair do loop em caso de erro
+                continuarMatricula = false; 
             }
         }
     }
@@ -750,7 +761,7 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                 alunoService.consultarDisciplinasCursadas(aluno.getId());
                 System.out.println("\nPressione Enter para voltar ao menu.");
                 scanner.nextLine();
-                continuarListagem = false; // Sai do loop após exibir as disciplinas
+                continuarListagem = false; 
                 clearScreen();
             } catch (Exception e) {
                 System.out.println("Erro inesperado: " + e.getMessage());

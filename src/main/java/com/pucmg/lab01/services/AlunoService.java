@@ -135,33 +135,31 @@ public class AlunoService {
     @Transactional
     public void consultarDisciplinasCursadas(Long idAluno) {
         Aluno aluno = consultarAluno(idAluno);
-        System.out.println("Disciplinas cursadas por " + aluno.getNome() + ":");
-        aluno.getDisciplinas().forEach(disciplina -> {
-            System.out.println(disciplina.getNome());
-        });
+        StringBuilder disciplinasCursadas = new StringBuilder("Disciplinas cursadas por " + aluno.getNome() + ":\n");
+        aluno.getDisciplinas().forEach(disciplina -> disciplinasCursadas.append(disciplina.getNome()).append(", "));
+        disciplinasCursadas.append("realizada com sucesso!\n");
+        System.out.println(disciplinasCursadas.toString());
     }
 
-    public boolean efetuarMatricula(Long idAluno) {
-        boolean matriculaValida = true;
+    public void efetuarMatricula(Long idAluno) {
         Aluno aluno = consultarAluno(idAluno);
         
         for (Disciplina disciplina : aluno.getDisciplinas()) {
             try {
                 if(!disciplinaService.verificaStatusDisciplina(disciplina.getNome())) {
-                    matriculaValida = false;
+                    cancelarMatriculaDisciplina(disciplina.getNome(), idAluno);
                     System.err.println("O aluno " + aluno.getNome() + " não pode se matricular na disciplina " + disciplina.getNome() + " pois ela não atingiu a quantidade de alunos necessários para ocorrer neste semestre.");
                 }
 
                 if(!disciplinaService.verificaDisponibilidadeDisciplina(disciplina.getNome())) {
-                    matriculaValida = false;
+                    cancelarMatriculaDisciplina(disciplina.getNome(), idAluno);
                     System.err.println("O aluno " + aluno.getNome() + " não pode se matricular na disciplina " + disciplina.getNome() + " pois ela não está disponível para matrícula.");
                 }
+
+                salvarAluno(aluno);
             } catch (Exception e) {
-                matriculaValida = false;
                 System.err.println("Erro ao efetuar matrícula na disciplina " + disciplina.getNome());
             }
         }
-        
-        return matriculaValida;
     }
 }
