@@ -1,4 +1,4 @@
-package com.pucmg.lab01;
+package com.pucmg.lab01.application;
 
 import com.pucmg.lab01.models.Aluno;
 import com.pucmg.lab01.models.Curso;
@@ -154,7 +154,8 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                         System.out.println("2 - Cancelar matrícula em uma disciplina");
                         System.out.println("3 - Matricular em todas as disciplinas do semestre");
                         System.out.println("4 - Listar disciplinas matriculadas");
-                        System.out.println("5 - Voltar ao menu principal");
+                        System.out.println("5 - Gerar valor mensalidade");
+                        System.out.println("6 - Voltar ao menu principal");
                         int opcaoAluno = scanner.nextInt();
                         scanner.nextLine();
 
@@ -176,6 +177,10 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
                                 listarDisciplinasMatriculadasAluno(scanner, aluno); 
                                 break;
                             case 5:
+                                clearScreen();
+                                gerarValorMensalidadeAluno(scanner, aluno);
+                                break;
+                            case 6:
                                 startSystem();
                                 break;
                             default:
@@ -765,6 +770,25 @@ public class SistemaDeMatriculasApplication implements CommandLineRunner {
             } catch (Exception e) {
                 System.out.println("Erro inesperado: " + e.getMessage());
                 continuarListagem = false; 
+            }
+        }
+    }
+
+    private void gerarValorMensalidadeAluno(Scanner scanner, Aluno aluno) {
+        boolean continuarGeracao = true;
+
+        while (continuarGeracao) {
+            try {
+                double valorMensalidade = alunoService.calcularMensalidade(aluno.getId());
+                System.out.println("O valor da mensalidade é: R$" + valorMensalidade + "\n");
+
+                System.out.println("\nPressione Enter para voltar ao menu.");
+                scanner.nextLine();
+                continuarGeracao = false; 
+                clearScreen();
+            } catch (Exception e) {
+                System.out.println("Erro inesperado: " + e.getMessage());
+                continuarGeracao = false; 
             }
         }
     }
