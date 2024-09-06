@@ -23,18 +23,26 @@ O sistema de matrículas é uma ferramenta abrangente que não apenas facilita o
 
 
 ### Histórias de Usuário
+
 | **História de Usuário** | **Como**        | **Quero**                               | **Para**                                       |
 |-------------------------|-----------------|-----------------------------------------|------------------------------------------------|
 | UC1                     | Usuário         | Efetuar login                           | Acessar o sistema com segurança                |
-| UC2                     | Usuário         | Recuperar minha senha                   | Obter acesso à minha conta se esquecer minha senha |
-| UC3                     | Secretário      | Cadastrar aluno                         | Adicionar novos alunos ao sistema              |
-| UC4                     | Secretário      | Remover aluno                           | Excluir registros de alunos que não estão mais na instituição |
-| UC5                     | Secretário      | Gerar currículo                         | Preparar e disponibilizar o plano acadêmico para o semestre |
-| UC6                     | Secretário      | Atualizar dados do aluno                | Manter informações atualizadas dos alunos      |
-| UC7                     | Secretário      | Consultar dados do aluno                | Acessar informações detalhadas sobre os alunos |
-| UC8                     | Aluno           | Matricular em disciplina obrigatória    | Cumprir os requisitos do meu curso             |
-| UC9                     | Aluno           | Matricular em disciplina optativa       | Complementar minha formação acadêmica          |
-| UC10                    | Aluno           | Cancelar matrícula                       | Ajustar meu plano de estudos                   |
-| UC11                    | Aluno           | Inscrever para o semestre                |Receber cobrança relativa as disciplinas daquele semestre|
-| UC12                    | Professor       | Visualizar histórico do aluno            | Entender o progresso acadêmico do aluno        |
-| UC13                    | Professor       | Visualizar os alunos matriculados em cada disciplina | Planejar aulas e avaliações                  |
+| UC2                     | Usuário         | Recuperar senha                         | Conseguir acessar o sistema se esquecer minha senha |
+| UC3                     | Secretário      | Cadastrar aluno                         | Inserir novos alunos no sistema                |
+| UC4                     | Secretário      | Atualizar aluno                         | Manter os dados dos alunos sempre corretos e atualizados |
+| UC5                     | Secretário      | Remover aluno                           | Excluir alunos que não fazem mais parte da instituição |
+| UC6                     | Secretário      | Consultar aluno                         | Verificar dados e informações de alunos no sistema |
+| UC7                     | Secretário      | Cadastrar professor                     | Inserir novos professores no sistema           |
+| UC8                     | Secretário      | Atualizar professor                     | Manter os dados dos professores corretos e atualizados |
+| UC9                     | Secretário      | Remover professor                       | Excluir professores que não fazem mais parte da instituição |
+| UC10                    | Secretário      | Consultar professor                     | Verificar dados e informações de professores no sistema |
+| UC11                    | Aluno           | Matricular em disciplina                | Me inscrever nas disciplinas de meu interesse   |
+| UC12                    | Aluno           | Cancelar matrícula em disciplina        | Deixar de cursar uma disciplina que não desejo mais cursar |
+| UC13                    | Aluno           | Efetuar matrícula no semestre           | Me inscrever nas disciplinas do semestre atual |
+| UC14                    | Aluno           | Gerar mensalidade                       | Receber o boleto referente a minha mensalidade|
+| UC15                    | Aluno           | Listar disciplinas matriculadas         | Visualizar todas as disciplinas em que estou matriculado |
+| UC16                    | Aluno           | Matricular em disciplina obrigatória    | Me inscrever em disciplinas essenciais para minha formação |
+| UC17                    | Aluno           | Matricular em disciplina optativa       | Me inscrever em disciplinas que complementam minha formação |
+| UC18                    | Professor       | Listar alunos de uma disciplina         | Visualizar os alunos que estão matriculados em minhas disciplinas |
+| UC19                    | Professor       | Listar disciplinas lecionadas           | Verificar todas as disciplinas que estou ministrando |
+
