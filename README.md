@@ -38,7 +38,7 @@ O sistema de matrículas é uma ferramenta abrangente que não apenas facilita o
 | UC10                    | Secretário      | Consultar professor                     | Verificar dados e informações de professores no sistema |
 | UC11                    | Aluno           | Matricular em disciplina                | Me inscrever nas disciplinas de meu interesse   |
 | UC12                    | Aluno           | Cancelar matrícula em disciplina        | Deixar de cursar uma disciplina que não desejo mais cursar |
-| UC13                    | Aluno           | Efetuar matrícula no semestre           | Finalizar minha matrícula no semestre |
+| UC13                    | Aluno           | Efetuar matrícula no semestre           | Finalizar minha matrícula para o semestre |
 | UC14                    | Aluno           | Gerar mensalidade                       | Receber o boleto referente a minha mensalidade|
 | UC15                    | Aluno           | Listar disciplinas matriculadas         | Visualizar todas as disciplinas em que estou matriculado |
 | UC16                    | Aluno           | Matricular em disciplina obrigatória    | Me inscrever em disciplinas essenciais para minha formação |
