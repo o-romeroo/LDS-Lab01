@@ -142,7 +142,7 @@ public void cancelarMatriculaDisciplina(String nomeDisciplina, Long idAluno) {
         }
     }
 
-    @Transactional
+@Transactional
 public void efetuarMatricula(Long idAluno) {
     Aluno aluno = consultarAluno(idAluno); // Certifique-se de que este método está carregando todas as disciplinas corretamente
     
@@ -163,6 +163,14 @@ public void efetuarMatricula(Long idAluno) {
     }
 
     salvarAluno(aluno); // Garanta que todas as mudanças no aluno sejam persistidas
+}
+
+public double calcularMensalidade(Aluno alunoId){
+    double mensalidade = 0;
+    for (int i = 0; i < alunoId.getDisciplinas().size(); i++) {
+        mensalidade += alunoId.getDisciplinas().get(i).getPreco();       
+}
+return mensalidade;
 }
 
 

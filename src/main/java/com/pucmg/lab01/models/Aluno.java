@@ -15,9 +15,6 @@ public class Aluno extends Usuario {
     )
     private List<Disciplina> disciplinas;
 
-    @ManyToOne
-    @JoinColumn(name = "financeiro_id") // Essa é a coluna de chave estrangeira no lado do aluno
-    private Financeiro financeiro;
 
     @Column(nullable = false)
     private int matricula;
@@ -36,13 +33,6 @@ public class Aluno extends Usuario {
         return disciplinas;
     }
 
-    public Financeiro getFinanceiro() {
-        return this.financeiro;
-    }
-
-    public void setFinanceiro(Financeiro financeiro) {
-        this.financeiro = financeiro;
-    }
 
     public int getMatricula() {
         return this.matricula;
