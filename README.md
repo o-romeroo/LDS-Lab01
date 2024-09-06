@@ -7,7 +7,7 @@ O sistema de matrículas é uma ferramenta abrangente que não apenas facilita o
 
 
 ### Diagrama de Caso de Uso
-![User Case](./imagens/UserCaseDiagramMatricula.png)
+![User Case](./imagens/UserCaseDiagramMatricula.PNG)
 
 
 
